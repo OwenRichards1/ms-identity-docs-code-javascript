@@ -59,7 +59,7 @@ jobs:
             echo "Processing Angular directory: $dir"
             cd $dir
             npm install
-            npx ng test --watch=false  # Run Angular CLI tests
+            npx ng test --no-watch --browsers=ChromeHeadless  # Run Angular CLI tests in headless mode
             cd ..
           done
 
