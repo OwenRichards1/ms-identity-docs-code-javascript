@@ -27,10 +27,10 @@ jobs:
       - name: Verify Node.js version
         run: node -v
 
-      # Restore, Build, and Test all JavaScript projects
-      - name: Install and Test JavaScript Projects
+      # Restore, Build, and Test generic JavaScript projects
+      - name: Install and Test Generic JavaScript Projects
         run: |
-          for dir in angular-spa msal-client-credentials-flow protect-api protect-function-app protected-api-access-protected-api react-spa vanillajs-spa; do
+          for dir in msal-client-credentials-flow protect-api protect-function-app protected-api-access-protected-api react-spa vanillajs-spa; do
             echo "Processing directory: $dir"
             cd $dir
             npm install
@@ -38,9 +38,34 @@ jobs:
             cd ..
           done
 
+  build-angular:
+    runs-on: ubuntu-latest  # Use Ubuntu for Angular projects
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Verify Node.js version
+        run: node -v
+
+      # Restore, Build, and Test Angular projects
+      - name: Install and Test Angular Projects
+        run: |
+          for dir in angular-spa; do
+            echo "Processing Angular directory: $dir"
+            cd $dir
+            npm install
+            npx ng test --watch=false  # Run Angular CLI tests
+            cd ..
+          done
+
   # dependabot-auto-merge:
   #   runs-on: ubuntu-latest
-  #   needs: build
+  #   needs: [build, build-angular]
   #   steps:
   #     - name: Auto-merge Dependabot PR
   #       if: github.event.pull_request.user.login == 'dependabot[bot]'  # Only run on Dependabot PRs
