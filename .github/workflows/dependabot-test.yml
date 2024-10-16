@@ -22,10 +22,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'  # Ensure Node.js 18.x is used
+          node-version: 18
 
       - name: Verify Node.js version
-        run: node -v  # Check if the correct Node.js version is being used
+        run: node -v
 
       # Restore, Build, and Test all JavaScript projects
       - name: Install and Test JavaScript Projects
@@ -34,7 +34,7 @@ jobs:
             echo "Processing directory: $dir"
             cd $dir
             npm install
-            npm run test || npm test  # Some projects might use different commands
+            npm run test || npm test
             cd ..
           done
 
