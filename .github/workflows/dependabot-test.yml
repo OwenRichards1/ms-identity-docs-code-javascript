@@ -22,7 +22,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'  # Update to Node.js 18.x as required by Angular
+          node-version: '18.x'  # Ensure Node.js 18.x is used
+
+      - name: Verify Node.js version
+        run: node -v  # Check if the correct Node.js version is being used
 
       # Restore, Build, and Test all JavaScript projects
       - name: Install and Test JavaScript Projects
